@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-class Create extends Component {
+class CommentYumfactor extends Component {
 	constructor() {
 		super();
 		this.state = {
-			name: '',
-			imageUrl: ''
+			text: '',
+			value: ''
 		};
 	}
 	onChange = (e) => {
@@ -16,23 +16,25 @@ class Create extends Component {
 		state[e.target.name] = e.target.value;
 		this.setState(state);
 	};
-
 	onSubmit = (e) => {
 		e.preventDefault();
 
-		const { name, imageUrl } = this.state;
+		const { text, value } = this.state;
 
-		axios.post('/api/cake/register', { name, imageUrl }).then((result) => {
+		axios.post('/api/cake/comment/' + this.props.match.params.id, { text }).then((result) => {
+			this.props.history.push('/');
+		});
+		axios.post('/api/cake/yumFactor/' + this.props.match.params.id, { value }).then((result) => {
 			this.props.history.push('/');
 		});
 	};
 	render() {
-		const { name, imageUrl } = this.state;
+		const { text, value } = this.state;
 		return (
 			<div className="container">
 				<div className="panel panel-default">
 					<div className="panel-heading">
-						<h3 className="panel-title">ADD Cake</h3>
+						<h3 className="panel-title">Comment and add yumFactor</h3>
 					</div>
 					<div className="panel-body">
 						<h4>
@@ -45,29 +47,40 @@ class Create extends Component {
 						</h4>
 						<form onSubmit={this.onSubmit}>
 							<div className="form-group">
-								<label>Name:</label>
+								<label>Comment:</label>
+								<textArea
+									className="form-control"
+									name="text"
+									onChange={this.onChange}
+									placeholder="comment"
+									cols="80"
+									rows="3"
+								>
+									{text}
+								</textArea>
+								{/* <label>Comment:</label>
 								<input
 									type="text"
-									class="form-control"
-									name="name"
-									value={name}
+									className="form-control"
+									name="comment"
+									value={comment}
 									onChange={this.onChange}
-									placeholder="Name"
-								/>
+									placeholder="Comment"
+								/> */}
 							</div>
 							<div className="form-group">
-								<label>ImageUrl:</label>
+								<label>yumFactor:</label>
 								<input
 									type="text"
-									class="form-control"
-									name="imageUrl"
-									value={imageUrl}
+									className="form-control"
+									name="value"
+									value={value}
 									onChange={this.onChange}
-									placeholder="ImageUrl"
+									placeholder="yumFactor"
 								/>
 							</div>
 
-							<button type="submit" class="btn btn-default">
+							<button type="submit" className="btn btn-default">
 								Submit
 							</button>
 						</form>
@@ -78,4 +91,4 @@ class Create extends Component {
 	}
 }
 
-export default Create;
+export default CommentYumfactor;

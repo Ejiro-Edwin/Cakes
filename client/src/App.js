@@ -4,23 +4,29 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Create from './components/layout/Create';
+import Show from './components/layout/Show';
+import Edit from './components/layout/Edit';
+import Comment from './components/layout/CommentYumfactor';
 import './App.css';
 
 class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="App">
-          <Navbar />
-          <Route exact path="/" component={Landing} />
-            <div className="container">
-            <Route exact path="/create" component={Create} />
-            </div>
-            <Footer />
-          </div>
-        </Router>
-    );
-  }
+	render() {
+		return (
+			<Router>
+				<div className="App">
+					<Navbar />
+					<Route exact path="/" component={Landing} />
+					<div className="container">
+						<Route path="/edit/:id" component={Edit} />
+						<Route exact path="/create" component={Create} />
+						<Route exact path="/show/:id" component={Show} />
+						<Route exact path="/commentYumfactor/:id" component={Comment} />
+					</div>
+					<Footer />
+				</div>
+			</Router>
+		);
+	}
 }
 
 export default App;
